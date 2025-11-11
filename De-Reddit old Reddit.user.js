@@ -20,7 +20,7 @@ const style = document.createElement('style');
 
 // remove all reddit "stuff".  Votes, header, footer, links to sub-reddits & profiles, commenting
 style.textContent = `
-.midcol, .infobar, .side, .footer-parent, .flair, #header, .score, .buttons, .thumbnail {
+.midcol, .infobar, .side, .footer-parent, .flair, #header, .score, .buttons, .thumbnail, .seo-comments-recommendations {
     display: none !important;
 }
 a:not(.expand, .choice) {
