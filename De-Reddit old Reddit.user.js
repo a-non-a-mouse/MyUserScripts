@@ -23,7 +23,7 @@ style.textContent = `
 .midcol, .infobar, .side, .footer-parent, .flair, #header, .score, .buttons, .thumbnail, .seo-comments-recommendations {
     display: none !important;
 }
-a:not(.expand, .choice) {
+a:not(.expand, .choice, [id^=more_]) {
     pointer-events: none;
     cursor: default;
     text-decoration: none;
