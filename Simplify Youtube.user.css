@@ -1,0 +1,13 @@
+/* ==UserStyle==
+@name        Simplify Youtube
+@description Remove everything from youtube except search
+@match       *://*.youtube.com/*
+==/UserStyle== */
+
+tp-yt-app-drawer, yt-image-banner-view-model, #page-header-banner, #start, #end, #actions, #secondary, ytd-comments, .ytp-overlays-container {
+    display: none !important;
+}
+
+#center {
+    margin: auto;
+}
