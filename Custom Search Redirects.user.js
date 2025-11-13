@@ -8,18 +8,6 @@
 [
   {
     "id": 1,
-    "priority": 10,
-    "action": {
-      "type": "redirect",
-      "redirect": { "regexSubstitution": "https://www.amazon.de/s?k=\\1" }
-    },
-    "condition": {
-      "regexFilter": "^https://www\\.google\\.com/search\\?client=safari.*[&?]q=a\\+([^&]+)",
-      "resourceTypes": ["main_frame"]
-    }
-  },
-  {
-    "id": 2,
     "priority": 9,
     "action": {
       "type": "redirect",
@@ -33,7 +21,7 @@
     }
   },
   {
-    "id": 3,
+    "id": 2,
     "priority": 8,
     "action": {
       "type": "redirect",
@@ -47,7 +35,7 @@
     }
   },
   {
-    "id": 4,
+    "id": 3,
     "priority": 7,
     "action": {
       "type": "redirect",
@@ -61,7 +49,7 @@
     }
   },
   {
-    "id": 5,
+    "id": 4,
     "priority": 6,
     "action": {
       "type": "redirect",
@@ -75,7 +63,7 @@
     }
   },
   {
-    "id": 6,
+    "id": 5,
     "priority": 5,
     "action": {
       "type": "redirect",
@@ -89,7 +77,7 @@
     }
   },
   {
-    "id": 7,
+    "id": 6,
     "priority": 4,
     "action": {
       "type": "redirect",
@@ -103,7 +91,7 @@
     }
   },
   {
-    "id": 8,
+    "id": 7,
     "priority": 3,
     "action": {
       "type": "redirect",
@@ -117,7 +105,7 @@
     }
   },
   {
-    "id": 9,
+    "id": 8,
     "priority": 2,
     "action": {
       "type": "redirect",
@@ -131,7 +119,7 @@
     }
   },
   {
-    "id": 10,
+    "id": 9,
     "priority": 1,
     "action": {
       "type": "redirect",
