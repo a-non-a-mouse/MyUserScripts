@@ -23,11 +23,11 @@ style.textContent = `
 .midcol, .infobar, .side, .footer-parent, .flair, #header, .score, .buttons, .thumbnail, .seo-comments-recommendations, .domain {
     display: none !important;
 }
-a:not(.expand, .choice, [id^=more_], .usertext a) {
+a:not(.expand, .choice, [id^=more_], .usertext a:not([href^="/u/"])) {
     pointer-events: none;
     cursor: default;
     text-decoration: none;
-    color: black;
+    color: inherit !important;
 }`;
 
 document.head.appendChild(style);
