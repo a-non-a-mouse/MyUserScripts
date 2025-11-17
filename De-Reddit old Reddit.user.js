@@ -5,11 +5,11 @@
 // ==/UserScript==
 
 // Only allow viewing reddit posts.  No browsing of any kind
-if (!/\/comments\//.test(location.href)) {
+if (!/\/(comments|media)(\/|\?)/.test(location.href)) {
     window.location = 'https://www.google.com';
 }
 
-if (!/old\.reddit\.com/.test(location.href)) {
+if (!/(old\.reddit\.com|\/media\?)/.test(location.href)) {
     location.href = location.href.replace(/^https?:\/\/([^.]+\.)?reddit\.com/, 'https://old.reddit.com');
 }
 
@@ -20,10 +20,10 @@ const style = document.createElement('style');
 
 // remove all reddit "stuff".  Votes, header, footer, links to sub-reddits & profiles, commenting
 style.textContent = `
-.midcol, .infobar, .side, .footer-parent, .flair, #header, .score, .buttons, .thumbnail, .seo-comments-recommendations {
+.midcol, .infobar, .side, .footer-parent, .flair, #header, .score, .buttons, .thumbnail, .seo-comments-recommendations, .domain {
     display: none !important;
 }
-a:not(.expand, .choice, [id^=more_]) {
+a:not(.expand, .choice, [id^=more_], .usertext a) {
     pointer-events: none;
     cursor: default;
     text-decoration: none;

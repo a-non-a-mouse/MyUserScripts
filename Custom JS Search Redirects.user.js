@@ -5,56 +5,7 @@
 // @run-at       document-start
 // ==/UserScript==
 
-function parseDatesFromSearchTerm(searchTerm) {
-  let match;
-  const dateRangeRegex = /(\d{1,2}\/\d{1,2})-(\d{1,2}\/\d{1,2})/;
-
-  if ((match = searchTerm.match(dateRangeRegex))) {
-    const startDate = match[1];
-    const endDate = match[2];
-    const cleanedSearchTerm = searchTerm.replace(dateRangeRegex, '').trim();
-    const today = new Date();
-    const currentYear = today.getFullYear();
-
-    const parseDate = (dateStr) => {
-      const [month, day] = dateStr.split('/').map(Number);
-      const date = new Date(currentYear, month - 1, day, 12, 0, 0, 0);
-
-      if (date < today) {
-        date.setFullYear(currentYear + 1);
-      }
-
-      return date;
-    };
-
-    const startDateObj = parseDate(startDate);
-    const endDateObj = parseDate(endDate);
-
-    return { searchTerm: cleanedSearchTerm, dates: [startDateObj, endDateObj] };
-  }
-
-  return { searchTerm, dates: null };
-}
-
-function getDateQueryParams(
-  dates,
-  fromDateParam = 'checkin',
-  toDateParam = 'checkout',
-  dateFormatter = (date) => date.toISOString().split('T')[0]
-) {
-  if (!dates) {
-    return '';
-  }
-  const [checkin, checkout] = dates;
-
-  return `${fromDateParam}=${dateFormatter(
-    checkin
-  )}&${toDateParam}=${dateFormatter(checkout)}`;
-}
-
-(function () {
-  'use strict';
-
+(() => {
   const searchEngines = {
     a: 'https://www.amazon.com/s?k=%s',
     'a au': 'https://www.amazon.com.au/s?k=%s',
@@ -67,25 +18,47 @@ function getDateQueryParams(
     'a it': 'https://www.amazon.it/s?k=%s',
     'a jp': 'https://www.amazon.co.jp/s?k=%s',
     'a uk': 'https://www.amazon.co.uk/s?k=%s',
-    air: (inputSearchTerm) => {
-      const { searchTerm, dates } = parseDatesFromSearchTerm(inputSearchTerm);
-      const transformed = searchTerm.replace(/,\s*/, '--').replace(/\s+/g, '-');
-      const url = `https://www.airbnb.com/s/${transformed}/homes?adults=1&${getDateQueryParams(
-        dates
-      )}`;
-
-      return url;
-    },
-    b: (inputSearchTerm) => {
-      const { searchTerm, dates } = parseDatesFromSearchTerm(inputSearchTerm);
-      const url = `https://www.booking.com/searchresults.html?ss=${searchTerm}&group_adults=1&no_rooms=1&group_children=0&${getDateQueryParams(
-        dates
-      )}`;
-
-      return url;
-    },
+    air: 'https://www.airbnb.com/s/%s/homes?adults=1&checkin=%d1&checkout=%d2',
+    b: 'https://www.booking.com/searchresults.html?ss=%s&group_adults=1&no_rooms=1&group_children=0&checkin=%d1&checkout=%d2',
     m: 'https://www.google.com/maps/search/%s',
+    mh: 'https://www.google.com/maps/search/hotels+near+%s',
+    t: 'https://translate.google.com/?sl=auto&tl=en&text=%s&op=translate',
+    yt: 'https://www.youtube.com/results?search_query=%s',
   };
+
+  function parseDatesFromSearchTerm(searchTerm) {
+    let date1 = '';
+    let date2 = '';
+
+    const today = new Date();
+    const currentYear = today.getFullYear();
+
+    const parseToYYYYMMDD = (mm, dd, yyyy = currentYear) => {
+      const date = new Date(yyyy, mm - 1, dd, 12, 0, 0, 0);
+
+      if (date < today) {
+        date.setFullYear(currentYear + 1);
+      }
+
+      return date.toISOString().split('T')[0];
+    };
+
+    const dateRangeRegex =
+      /(?:(\d{4})[-\/])?(\d{1,2})[-\/](\d{1,2})[-\/](?:(\d{4})[-\/])?(\d{1,2})[-\/](\d{1,2})/;
+    const match = searchTerm.match(dateRangeRegex);
+    if (match) {
+      date1 = parseToYYYYMMDD(match[2], match[3], match[1]);
+      date2 = parseToYYYYMMDD(match[5], match[6], match[4]);
+      if (date2 < date1) {
+        date2 = parseToYYYYMMDD(match[5], match[6], currentYear + 1);
+      }
+      const cleanedSearchTerm = searchTerm.replace(dateRangeRegex, '').trim();
+
+      return { searchTerm: cleanedSearchTerm, date1, date2 };
+    }
+
+    return { searchTerm, date1, date2 };
+  }
 
   const url = new URL(window.location.href);
   const params = new URLSearchParams(url.search);
@@ -102,11 +75,15 @@ function getDateQueryParams(
     const match = query.match(regex);
 
     if (match) {
-      const searchTerm = match[1] || '';
-      const redirectUrl =
-        typeof urlTemplate === 'function'
-          ? urlTemplate(searchTerm)
-          : urlTemplate.replace('%s', encodeURIComponent(searchTerm));
+      const inputSearchTerm = match[1] || '';
+      const { searchTerm, date1, date2 } =
+        parseDatesFromSearchTerm(inputSearchTerm);
+
+      let redirectUrl = urlTemplate
+        .replace('%s', encodeURIComponent(searchTerm))
+        .replace('%d1', date1)
+        .replace('%d2', date2);
+
       window.location.replace(redirectUrl);
       return;
     }

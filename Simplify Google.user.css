@@ -1,10 +1,11 @@
 /* ==UserStyle==
-@name        Remove Google AI Overview
-@description Remove useless ai in google search results.  Unfortunately it still runs, this just prevents it from being visible
+@name        Simplify Google
+@description Remove useless nonsense in google search results
 @match       https://www.google.com/
 @match       https://www.google.com/search*
 ==/UserStyle== */
 
+/* AI Overview */
 #Odp5De, .olrp5b, .hdzaWe {
     display: none !important;
 }
@@ -12,4 +13,9 @@
 button.plR5qb {
     visibility: hidden;
     margin-left: -90px;
+}
+
+/* Ads */
+.zTzk8e {
+    display: none !important;
 }

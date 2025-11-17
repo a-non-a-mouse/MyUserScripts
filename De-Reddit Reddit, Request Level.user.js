@@ -31,8 +31,19 @@
         }
     },
     {
-        "id": 3,
-        "priority": 3,
+        "id": 2,
+        "priority": 2,
+        "action": {
+            "type": "allow"
+        },
+        "condition": { 
+            "urlFilter": "*reddit.com/media*",
+            "resourceTypes": ["main_frame"] 
+        }
+    },
+    {
+        "id": 4,
+        "priority": 4,
         "action": {
             "type": "redirect",
             "redirect": {

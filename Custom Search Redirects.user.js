@@ -8,6 +8,20 @@
 [
   {
     "id": 1,
+    "priority": 10,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "regexSubstitution": "https://www.google.com/search?q=\\1+site:wikipedia.org&hl=en&lr=lang_en"
+      }
+    },
+    "condition": {
+      "regexFilter": "^https://www\\.google\\.com/search\\?client=safari.*[&?]q=w\\+([^&]+)",
+      "resourceTypes": ["main_frame"]
+    }
+  },
+  {
+    "id": 2,
     "priority": 9,
     "action": {
       "type": "redirect",
@@ -21,7 +35,7 @@
     }
   },
   {
-    "id": 2,
+    "id": 3,
     "priority": 8,
     "action": {
       "type": "redirect",
@@ -35,7 +49,7 @@
     }
   },
   {
-    "id": 3,
+    "id": 4,
     "priority": 7,
     "action": {
       "type": "redirect",
@@ -49,7 +63,7 @@
     }
   },
   {
-    "id": 4,
+    "id": 5,
     "priority": 6,
     "action": {
       "type": "redirect",
@@ -63,7 +77,7 @@
     }
   },
   {
-    "id": 5,
+    "id": 6,
     "priority": 5,
     "action": {
       "type": "redirect",
@@ -77,7 +91,7 @@
     }
   },
   {
-    "id": 6,
+    "id": 7,
     "priority": 4,
     "action": {
       "type": "redirect",
@@ -91,7 +105,7 @@
     }
   },
   {
-    "id": 7,
+    "id": 8,
     "priority": 3,
     "action": {
       "type": "redirect",
@@ -105,7 +119,7 @@
     }
   },
   {
-    "id": 8,
+    "id": 9,
     "priority": 2,
     "action": {
       "type": "redirect",
@@ -119,7 +133,7 @@
     }
   },
   {
-    "id": 9,
+    "id": 10,
     "priority": 1,
     "action": {
       "type": "redirect",
