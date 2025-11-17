@@ -23,7 +23,7 @@ style.textContent = `
 .midcol, .infobar, .side, .footer-parent, .flair, #header, .score, .buttons, .thumbnail, .seo-comments-recommendations, .domain {
     display: none !important;
 }
-a:not(.expand, .choice, [id^=more_], .usertext a:not([href^="/u/"])) {
+a:not(.expand, .choice, [id^=more_], .usertext a:not([href^="/u/"]), .title.outbound) {
     pointer-events: none;
     cursor: default;
     text-decoration: none;

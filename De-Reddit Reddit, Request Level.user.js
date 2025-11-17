@@ -31,8 +31,8 @@
         }
     },
     {
-        "id": 2,
-        "priority": 2,
+        "id": 3,
+        "priority": 3,
         "action": {
             "type": "allow"
         },
@@ -44,6 +44,17 @@
     {
         "id": 4,
         "priority": 4,
+        "action": {
+            "type": "allow"
+        },
+        "condition": { 
+            "urlFilter": "out.reddit.com/*",
+            "resourceTypes": ["main_frame"] 
+        }
+    },
+    {
+        "id": 5,
+        "priority": 5,
         "action": {
             "type": "redirect",
             "redirect": {
